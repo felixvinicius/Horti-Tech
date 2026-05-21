@@ -108,9 +108,12 @@ app.post("/api/chat", async (req, res) => {
 app.get("/health", (req, res) => {
     res.json({ status: "ok", service: "HortiTech Nutritional API", timestamp: new Date().toISOString() });
 });
+if (process.env.NODE_ENV !== "production") {
+    app.listen(PORT, () => {
+        console.log(`\n🌿 HortiTech API rodando em http://localhost:${PORT}`);
+        console.log(`   POST /api/chat — endpoint principal`);
+        console.log(`   GET  /health  — verificação de saúde\n`);
+    });
+}
 
-app.listen(PORT, () => {
-    console.log(`\n🌿 HortiTech API rodando em http://localhost:${PORT}`);
-    console.log(`   POST /api/chat — endpoint principal`);
-    console.log(`   GET  /health  — verificação de saúde\n`);
-});
+module.exports = app;
